@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker-app
+  template:
+    metadata:
+      labels:
+        app: worker-app
+    spec:
+      containers:
+      - name: worker-app
+        image: dockersamples/examplevotingapp_worker:dotnet
+        env:
+        - name: REDIS
+          value: redis-alpine
+        - name: POSTGRES
+          value: postgres-9.4
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
